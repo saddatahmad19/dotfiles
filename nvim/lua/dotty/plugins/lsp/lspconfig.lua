@@ -109,24 +109,53 @@ return {
 				})
 			end,
 			["pylsp"] = function()
+				local pylsp_binary = vim.fn.stdpath("data") .. "/mason/bin/pylsp"
 				lspconfig["pylsp"].setup({
 					capabilities = capabilities,
+					cmd = { pylsp_binary },
 					filetypes = { "python" },
 					settings = {
-						configurationSources = { "flake8" },
-						plugins = {
-							pycodestyle = {
-								enabled = false,
+						pylsp = {
+							plugins = {
+								pycodestyle = {
+									enabled = true,
+									maxLineLength = 100,
+								},
+								mccabe = {
+									enabled = true,
+								},
+								pyflakes = {
+									enabled = true,
+								},
+								flake8 = {
+									enabled = true,
+									maxLineLength = 100,
+								},
+								pylint = {
+									enabled = true,
+									executable = vim.fn.stdpath("data") .. "/mason/bin/pylint",
+								},
 							},
-							mccabe = {
-								enabled = false,
+						},
+					},
+				})
+			end,
+			["pyright"] = function()
+				local pyright_binary = vim.fn.stdpath("data") .. "/mason/bin/pyright-langserver"
+				lspconfig["pyright"].setup({
+					capabilities = capabilities,
+					cmd = { pyright_binary, "--stdio" },
+					filetypes = { "python" },
+					settings = {
+						python = {
+							analysis = {
+								typeCheckingMode = "basic",
+								diagnosticMode = "workspace",
+								inlayHints = {
+									variableTypes = true,
+									functionReturnTypes = true,
+								},
 							},
-							pyflakes = {
-								enabled = false,
-							},
-							-- flake8 = {
-							-- 	enabled = true,
-							-- },
 						},
 					},
 				})

@@ -43,9 +43,11 @@ return {
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
-				"flake8", -- python formatter
+				"prettier",
+				"stylua",
+				"flake8",
+				"pylint",
+				"black",
 				"eslint_d",
 			},
 		})
